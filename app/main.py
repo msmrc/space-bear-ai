@@ -1,5 +1,6 @@
 import pickle
 import logging
+import pandas as pd
 
 from flask import Flask
 from flask import jsonify
@@ -13,9 +14,11 @@ logger = logging.getLogger(__name__)
 main = Flask(__name__)
 
 
-with open('../assets/embedds.pickle', 'rb') as f:
-    embeddings_dict = pickle.load(f)
-    logger.info("Embeddings loaded")
+# with open('../assets/embedds.pickle', 'rb') as f:
+#     embeddings_dict = pickle.load(f)
+#     logger.info("Embeddings loaded")
+
+embeddings_df = pd.read_parquet('../assets/embedds.parquet')
 
 
 @main.route('/')
@@ -25,7 +28,8 @@ def ML_service_space_bear():
 
 @main.route('/embedding/<word>')
 def embedding_word(word):
-    return jsonify(embeddings_dict[word].tolist())
+    # return jsonify(embeddings_dict[word].tolist())
+    return jsonify(embeddings_df.loc[word].values.tolist())
 
 
 @main.route('/test_ping')
