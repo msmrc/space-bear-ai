@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 main = Flask(__name__)
 
 
-with open('./assets/embedds.pickle', 'rb') as f:
+with open('../assets/embedds.pickle', 'rb') as f:
     embeddings_dict = pickle.load(f)
     logger.info("Embeddings loaded")
 
