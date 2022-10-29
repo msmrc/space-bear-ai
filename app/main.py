@@ -20,7 +20,11 @@ main = Flask(__name__)
 
 
 # just for test
-embeddings_df = pd.read_parquet('./assets/embedds.parquet')
+dfs = []
+for i in range(40):
+    selected_df = pd.read_parquet(f"./assets/embedds_chunks/chunk_{i}.parquet")
+    dfs.append(selected_df)
+embeddings_df = pd.concat(dfs)
 
 
 @main.route('/')
