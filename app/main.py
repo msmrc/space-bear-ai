@@ -18,6 +18,8 @@ main = Flask(__name__)
 #     embeddings_dict = pickle.load(f)
 #     logger.info("Embeddings loaded")
 
+
+# just for test
 embeddings_df = pd.read_parquet('./assets/embedds.parquet')
 
 
