@@ -4,3 +4,6 @@ pandas
 openpyxl
 gunicorn
 requests
+pandas
+pyarrow
+fastparquet
