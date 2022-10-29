@@ -18,13 +18,8 @@ main = Flask(__name__)
 #     embeddings_dict = pickle.load(f)
 #     logger.info("Embeddings loaded")
 
-
-# just for test
-dfs = []
-for i in range(40):
-    selected_df = pd.read_parquet(f"./assets/embedds_chunks/chunk_{i}.parquet")
-    dfs.append(selected_df)
-embeddings_df = pd.concat(dfs)
+url="https://storage.yandexcloud.net/spacebear/embedds.parquet"
+embeddings_df=pd.read_parquet(url)
 
 
 @main.route('/')
