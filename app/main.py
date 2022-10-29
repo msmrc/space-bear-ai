@@ -1,16 +1,34 @@
+import pickle
+import logging
+
 from flask import Flask
 from flask import jsonify
-from flask import json
+
 from utils.get_data import get_user, get_project, get_all_projects, get_all_users
-app = Flask(__name__)
 
 
-@app.route('/')
+logger = logging.getLogger(__name__)
+
+
+main = Flask(__name__)
+
+
+with open('../assets/embedds.pickle', 'rb') as f:
+    embeddings_dict = pickle.load(f)
+    logger.info("Embeddings loaded")
+
+
+@main.route('/')
 def ML_service_space_bear():
     return 'ML_service_space_bear'
 
 
-@app.route('/test_ping')
+@main.route('/embedding/<word>')
+def embedding_word(word):
+    return jsonify(embeddings_dict[word].tolist())
+
+
+@main.route('/test_ping')
 def test_ping():
     test_output = {}
     test_output["all_projects"] = get_all_projects()
@@ -19,4 +37,4 @@ def test_ping():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    main.run(debug=True)
