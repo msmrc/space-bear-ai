@@ -1,7 +1,7 @@
 import pandas as pd
 from typing import Dict
 
-from utils.get_data import get_all_projects, get_project, get_all_users
+from utils.get_data import get_all_projects, get_project, get_all_users, get_user
 from utils.text_utils import get_project_text_desc, embedd_representation
 from utils.similarity_utils import cosine_similarity
 from utils.text_utils import get_user_text_desc, get_user_roles_desc, get_user_skill_desc
@@ -70,5 +70,22 @@ def search_projects_for_specialist(user_id: int, input_df: pd.DataFrame) -> Dict
         project_desc = get_project_text_desc(id)
         id_metrics['semantic'] = cosine_similarity(embedd_representation(desc, input_df), embedd_representation(project_desc, input_df))
         result_dict[id] = id_metrics
+
+    return result_dict
+
+
+def search_users_for_user(user_id: int, input_df: pd.DataFrame) -> Dict[int, Dict[str, float]]:
+    interests = get_user(user_id)['interestedTags']
+    desc = get_user(user_id)['aboutDescription']
+
+    all_users = get_all_users()
+
+    result_dict = {}
+
+    for user in all_users:
+        if int(user['_id']) != user_id:
+            interests_metric = intersection_metric(interests, user['interestedTags'])
+            semantic_metric = cosine_similarity(embedd_representation(desc, input_df), embedd_representation(user['aboutDescription'], input_df))
+            result_dict[user['_id']] = {"Interests": interests_metric, "Semantic": semantic_metric}
 
     return result_dict

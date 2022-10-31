@@ -5,7 +5,12 @@ from flask import Flask
 from flask import jsonify
 
 from utils.get_data import get_all_projects, get_all_users
-from utils.search_utils import search_similar_projects, search_specialists_for_project, search_projects_for_specialist
+from utils.search_utils import (
+    search_similar_projects,
+    search_specialists_for_project,
+    search_projects_for_specialist,
+    search_users_for_user
+)
 
 
 logger = logging.getLogger(__name__)
@@ -52,6 +57,12 @@ def search_users_for_pr(id):
 @main.route('/search_projects_for_specialist/<id>')
 def search_prs_for_user(id):
     result_dict = search_projects_for_specialist(int(id), EMBEDDINGS_DF)
+    return jsonify(result_dict)
+
+
+@main.route('/search_users_for_user/<id>')
+def search_users_for_usr(id):
+    result_dict = search_users_for_user(int(id), EMBEDDINGS_DF)
     return jsonify(result_dict)
 
 
