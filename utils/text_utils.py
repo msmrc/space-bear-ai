@@ -15,21 +15,23 @@ def embedd_representation(input_str: str, embeddings_df: pd.DataFrame) -> np.nda
     return mean_embedds
 
 
-def get_project_text_desc(id: int) -> str:
+def get_project_text_desc(id: str) -> str:
     project_dict = get_project(id)
     return project_dict['projectDescription']
 
 
-def get_user_text_desc(id: int) -> str:
+def get_user_text_desc(id: str) -> str:
     user_dict = get_user(id)
     return user_dict['aboutDescription']
 
 
-def get_user_skill_desc(id: int) -> List[str]:
+def get_user_skill_desc(id: str) -> List[str]:
     user_dict = get_user(id)
-    return user_dict['skillInformation']['skills']
+    if len(user_dict['skillInformation']) == 1:
+        return user_dict['skillInformation'][0]["skills"]
+    return np.sum([x['skills'] for x in user_dict['skillInformation']])
 
 
-def get_user_roles_desc(id: int) -> List[str]:
+def get_user_roles_desc(id: str) -> List[str]:
     user_dict = get_user(id)
-    return user_dict['skillInformation']['categories']
+    return np.asarray([x['category'] for x in user_dict['skillInformation']]).flatten().tolist()
