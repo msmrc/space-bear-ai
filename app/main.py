@@ -3,6 +3,7 @@ import pandas as pd
 
 from flask import Flask
 from flask import jsonify
+from flask_cors import CORS
 
 from utils.get_data import get_all_projects, get_all_users
 from utils.innovation_utils import innovation_score_project
@@ -17,7 +18,10 @@ from utils.search_utils import (
 logger = logging.getLogger(__name__)
 
 
+
 main = Flask(__name__)
+cors = CORS(main, resources={r"/*": {"origins": "*"}})
+main.config['CORS_HEADERS'] = 'Content-Type'
 
 
 url="https://storage.yandexcloud.net/spacebear/embedds.parquet"
