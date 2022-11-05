@@ -78,4 +78,4 @@ def innovation_score_pr(id):
 
 
 if __name__ == '__main__':
-    main.run(debug=True)
+    main.run(debug=False)
