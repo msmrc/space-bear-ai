@@ -119,4 +119,11 @@ supervised подходы, например, LambdaMART. В качестве м�
 
 
 
+# Документация
+
+https://disk.yandex.ru/i/BrwAalGz5PA2gA
+
+# Презентация
+
+https://disk.yandex.ru/i/y6KfAW3zwtCHqw
 
